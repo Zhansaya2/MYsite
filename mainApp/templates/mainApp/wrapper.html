@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Заголовок страницы</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+	<div class="jumbotron">
+		<div class="container">
+			<p>
+				<a href="/" class="btn btn-success btn-lg">Главная страница</a>
+				<a href="/news" class="btn btn-primary btn-lg">Новости &raquo;</a>
+				<a href="/contact" class="btn btn-info btn-lg">Контакты</a>
+			</p>
+			<h1>{% include "mainApp/includes/some_html.html" %}</h1>
+				{% block sidebar %}
+				<ul class="sidebar-nav">
+					{% if user.is_authenticated %}
+     					<li>User: {{ user.get_username }}</li>
+     					<li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+   					{% else %}
+     					<li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+   					{% endif %} 
+  				</ul>
+				{% endblock %}
+			
+		</div>
+		<div class="col-sm-10 ">
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+	<div class="container">
+		<img src="{% static 'mainApp/image/image_122.jpeg' %}" class="img-thumbnail" width="140%">
+		<hr>
+		&copy; Все права защищены 
+	</div>
+</body>
+</html>
